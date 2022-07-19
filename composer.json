@@ -1,0 +1,26 @@
+{
+    "name": "akash/phpmvc",
+    "description": "A simple lightweight PHP MVC framework",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "ManiruzzamanAkash",
+            "email": "manirujjamanakash@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.1",
+        "pecee/simple-router": "dev-master",
+        "vlucas/phpdotenv": "5.4.x-dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        },
+        "files": [
+            "app/Base/functions.php"
+        ]
+    },
+    "minimum-stability": "dev"
+}
