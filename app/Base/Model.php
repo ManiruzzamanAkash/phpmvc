@@ -19,27 +19,27 @@ class Model
     public function connect(): \PDO
     {
         try {
-            $dbHost = isset($_ENV['DB_HOST']) ? $_ENV['DB_HOST'] : '';
+            $dbHost = env('DB_HOST');
             if (empty($dbHost)) {
                 throw new Exception('Please provide Database host address.');
             }
 
-            $dbName = isset($_ENV['DB_NAME']) ? $_ENV['DB_NAME'] : '';
+            $dbName = env('DB_NAME');
             if (empty($dbName)) {
                 throw new Exception('Please provide Database name.');
             }
 
-            $dbPort = isset($_ENV['DB_PORT']) ? $_ENV['DB_PORT'] : '';
+            $dbPort = env('DB_PORT');
             if (empty($dbPort)) {
                 throw new Exception('Please provide Database port no.');
             }
 
-            $dbUser = isset($_ENV['DB_USER']) ? $_ENV['DB_USER'] : '';
+            $dbUser = env('DB_USER');
             if (empty($dbUser)) {
                 throw new Exception('Please provide Database user name.');
             }
 
-            $dbPassword = isset($_ENV['DB_PASSWORD']) ? $_ENV['DB_PASSWORD'] : '';
+            $dbPassword = env('DB_PASSWORD');
             if (empty($dbPassword)) {
                 throw new Exception('Please provide Database password.');
             }
@@ -56,10 +56,12 @@ class Model
      * @param string $sqlQuery
      * @return \PDOStatement|false
      */
-    public function execute(string $sqlQuery): \PDOStatement|false
+    public function execute(string $sqlQuery, array $bindParams = []): \PDOStatement|false
     {
-        $stmt = $this->connect()->query($sqlQuery);
-        $stmt->execute();
+        $pdo = $this->connect();
+
+        $stmt = $pdo->prepare($sqlQuery);
+        $stmt->execute($bindParams);
 
         return $stmt;
     }
@@ -70,9 +72,9 @@ class Model
      * @param string $sqlQuery
      * @return array|false
      */
-    public function fetchAll(string $sqlQuery): array|false
+    public function fetchAll(string $sqlQuery, array $bindParams = []): array|false
     {
-        $stmt = $this->execute($sqlQuery);
+        $stmt = $this->execute($sqlQuery, $bindParams);
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
@@ -82,9 +84,9 @@ class Model
      * @param string $sqlQuery
      * @return array|false
      */
-    public function fetchObj(string $sqlQuery): mixed
+    public function fetchObj(string $sqlQuery, array $bindParams = []): mixed
     {
-        $stmt = $this->execute($sqlQuery);
+        $stmt = $this->execute($sqlQuery, $bindParams);
         return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
 }
