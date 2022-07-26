@@ -9,8 +9,9 @@ class PortfoliosController extends Controller
 {
     public function index()
     {
-        $portfolio = new Portfolio();
-        $portfolios = $portfolio->get();
+        $portfolio  = new Portfolio();
+        $status     = isset($_GET['status']) ? intval($_GET['status']) : 1;
+        $portfolios = $portfolio->get($status);
 
         return views('portfolios/index.php', compact('portfolios'));
     }
