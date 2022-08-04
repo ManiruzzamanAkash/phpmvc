@@ -7,6 +7,8 @@ A super fast, customizable and lightweight PHP MVC Starter Framework to extend f
 Clone this repo -
 ```sh
 git clone https://github.com/ManiruzzamanAkash/phpmvc.git
+cd phpmvc
+composer install
 ```
 
 ## Modify the `.env` file
